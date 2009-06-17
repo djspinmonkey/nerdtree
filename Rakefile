@@ -1,9 +1,14 @@
-desc "Copy the vim/doc files into ~/.vim"
-task :deploy_local do
-  run "cp plugin/NERD_tree.vim ~/.vim/plugin"
-  run "cp doc/NERD_tree.txt ~/.vim/doc"
-end
+PLUGIN_DIR = File::expand_path("~/.vim/plugin")
+DOC_DIR    = File::expand_path("~/.vim/doc")
 
+directory PLUGIN_DIR
+directory DOC_DIR
+
+desc "Copy the vim/doc files into ~/.vim"
+task :deploy_local => [ PLUGIN_DIR, DOC_DIR ] do
+  run "cp plugin/NERD_tree.vim #{PLUGIN_DIR}"
+  run "cp doc/NERD_tree.txt #{DOC_DIR}"
+end
 
 desc "Create a zip archive for release to vim.org"
 task :zip do
